@@ -1,0 +1,23 @@
+---
+# tasks file for haproxy
+
+- name: Add haproxy PPA repository
+  apt_repository: repo="ppa:vbernat/haproxy-{{haproxy_version}}" state=present
+
+- name: Download haproxy
+  apt: pkg=haproxy state=present update_cache=yes
+
+- name: Configure haproxy
+  template: src=templates/haproxy.cfg dest=/etc/haproxy/haproxy.cfg
+  notify: restart haproxy
+
+- name: Enable init script
+  replace: dest='/etc/default/haproxy'
+    regexp='ENABLED=0'
+    replace='ENABLED=1'
+
+- name: Start haproxy
+  service: name=haproxy state=started enabled=yes
+
+- name: Restart haproxy
+  service: name=haproxy state=restarted

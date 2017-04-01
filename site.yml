@@ -1,0 +1,37 @@
+---
+
+# file: site.yml
+
+- hosts: localhost
+  connection: local
+  gather_facts: True
+  user: root
+  pre_tasks:
+    - include_vars: ec2vars/haproxy.yml
+  roles:
+    - ec2instance
+
+
+
+- hosts: localhost
+  connection: local
+  gather_facts: True
+  user: root
+  pre_tasks:
+    - include_vars: ec2vars/nginx.yml
+  roles:
+    - ec2instance
+
+- hosts: nginx
+  gather_facts: true
+  become: yes
+  roles:
+    - nginx
+
+- hosts: haproxy
+  gather_facts: true
+  become: yes
+  roles:
+    - haproxy
+
+

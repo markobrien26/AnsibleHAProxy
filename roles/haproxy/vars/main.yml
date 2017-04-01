@@ -1,0 +1,6 @@
+---
+# vars file for haproxy
+
+nginx_node_ip: "172.31.32.37"
+
+haproxy_version: 1.5

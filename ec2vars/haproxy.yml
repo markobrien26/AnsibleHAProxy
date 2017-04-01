@@ -1,0 +1,5 @@
+ec2_tag_Name: haproxy
+
+ec2_tag_Type: "haproxy"
+
+ec2_num_instances: 1

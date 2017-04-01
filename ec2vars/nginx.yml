@@ -1,0 +1,5 @@
+ec2_tag_Name: nginx
+
+ec2_tag_Type: nginx
+
+ec2_num_instances: 2
