@@ -1,6 +1,9 @@
 ---
 # tasks file for nginx
 
+- debug:
+    var: hostvars[inventory_hostname]
+
 - name: NGINX | Adding NGINX signing key
   apt_key: url=http://nginx.org/keys/nginx_signing.key state=present
 
@@ -21,3 +24,13 @@
   service:
     name: nginx
     state: started
+
+- name: Show ip on landing page
+  replace: dest='/usr/share/nginx/html/index.html'
+    regexp='<h1>Welcome to nginx!</h1>'
+    replace='<h1>Welcome to {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}</h1>'
+
+- name: NGINX | Restart NGINX
+  service:
+    name: nginx
+    state: restarted
